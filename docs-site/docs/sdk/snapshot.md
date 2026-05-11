@@ -37,7 +37,7 @@ interface SnapshotResult {
 ## Example
 
 ```ts
-import type { MemoryBundle } from '@mnemos/sdk';
+import type { MemoryBundle } from '@mnemos-sdk/sdk';
 
 const bundle: MemoryBundle = {
   data: {

@@ -35,7 +35,7 @@ interface MnemosClientConfig {
 
 ```ts
 import 'dotenv/config';
-import { MnemosClient } from '@mnemos/sdk';
+import { MnemosClient } from '@mnemos-sdk/sdk';
 
 const mnemos = new MnemosClient({
   privateKey:         process.env.AGENT_PRIVATE_KEY as `0x${string}`,

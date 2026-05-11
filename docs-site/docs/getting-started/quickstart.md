@@ -10,7 +10,7 @@ This guide takes you from zero to a working memory snapshot in about 5 minutes.
 ## 1. Install the SDK
 
 ```bash
-npm install @mnemos/sdk @0gfoundation/0g-ts-sdk
+npm install @mnemos-sdk/sdk @0gfoundation/0g-ts-sdk
 ```
 
 `@0gfoundation/0g-ts-sdk` is a required peer dependency for 0G Storage uploads and downloads.
@@ -29,7 +29,7 @@ Set up your `.env` file as described in [Environment Setup →](/getting-started
 
 ```ts
 import 'dotenv/config';
-import { MnemosClient } from '@mnemos/sdk';
+import { MnemosClient } from '@mnemos-sdk/sdk';
 
 const mnemos = new MnemosClient({
   privateKey: process.env.AGENT_PRIVATE_KEY as `0x${string}`,
@@ -50,7 +50,7 @@ See [SDK Overview →](/sdk/overview) for all constructor options.
 A snapshot serializes your agent's state to JSON, encrypts it, uploads it to 0G Storage, and mints a provenance NFT on 0G Chain — all in one call.
 
 ```ts
-import type { MemoryBundle } from '@mnemos/sdk';
+import type { MemoryBundle } from '@mnemos-sdk/sdk';
 
 const bundle: MemoryBundle = {
   data: {

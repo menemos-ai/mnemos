@@ -5,12 +5,12 @@ sidebar_position: 1
 
 # SDK Overview
 
-`@mnemos/sdk` is the TypeScript library for integrating AI agent memory with the 0G Network. It wraps three concerns — encryption, decentralized storage, and on-chain provenance — behind a single class: `MnemosClient`.
+`@mnemos-sdk/sdk` is the TypeScript library for integrating AI agent memory with the 0G Network. It wraps three concerns — encryption, decentralized storage, and on-chain provenance — behind a single class: `MnemosClient`.
 
 ## Installation
 
 ```bash
-npm install @mnemos/sdk @0gfoundation/0g-ts-sdk
+npm install @mnemos-sdk/sdk @0gfoundation/0g-ts-sdk
 ```
 
 `@0gfoundation/0g-ts-sdk` is a required peer dependency for 0G Storage uploads and downloads.
@@ -20,7 +20,7 @@ npm install @mnemos/sdk @0gfoundation/0g-ts-sdk
 `MnemosClient` is the single entry point for all SDK operations. Create one instance per agent.
 
 ```ts
-import { MnemosClient } from '@mnemos/sdk';
+import { MnemosClient } from '@mnemos-sdk/sdk';
 
 const mnemos = new MnemosClient({
   privateKey: process.env.AGENT_PRIVATE_KEY as `0x${string}`,

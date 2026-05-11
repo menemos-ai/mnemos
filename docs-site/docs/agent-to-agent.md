@@ -17,7 +17,12 @@ sidebar_label: "Agent to Agent"
 **Step 1 — Install**
 
 ```bash
-npm install @mnemos/sdk @0gfoundation/0g-ts-sdk
+npm i @mnemos-sdk/sdk @0gfoundation/0g-ts-sdk
+```
+
+if using pnpm:
+```bash
+pnpm add @mnemos-sdk/sdk @0gfoundation/0g-ts-sdk
 ```
 
 **Step 2 — Set environment variables**
@@ -38,7 +43,7 @@ MARKETPLACE_ADDRESS=0xFeb5Ac77Cd7746e2b35825dA800458D660D10209
 
 ```ts
 import 'dotenv/config';
-import { MnemosClient } from '@mnemos/sdk';
+import { MnemosClient } from '@mnemos-sdk/sdk';
 
 const mnemos = new MnemosClient({
   privateKey:         process.env.AGENT_PRIVATE_KEY as `0x${string}`,
@@ -92,7 +97,7 @@ That's the minimum integration. Your agent's memory is now an on-chain asset.
 
 ```ts
 import 'dotenv/config';
-import { MnemosClient } from '@mnemos/sdk';
+import { MnemosClient } from '@mnemos-sdk/sdk';
 
 const mnemos = new MnemosClient({
   privateKey:         process.env.AGENT_PRIVATE_KEY as `0x${string}`,
@@ -135,7 +140,7 @@ try {
 **When to use:** When you want to persist a point-in-time snapshot of your agent's state as an on-chain asset.
 
 ```ts
-import type { MemoryBundle } from '@mnemos/sdk';
+import type { MemoryBundle } from '@mnemos-sdk/sdk';
 
 const bundle: MemoryBundle = {
   data: {
@@ -739,7 +744,7 @@ All six variables are required. The five fixed values below apply to 0G Mainnet 
 
 ## Type Reference
 
-All public types exported from `@mnemos/sdk`.
+All public types exported from `@mnemos-sdk/sdk`.
 
 ```ts
 interface MnemosClientConfig {

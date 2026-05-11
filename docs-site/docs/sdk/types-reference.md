@@ -5,7 +5,7 @@ sidebar_position: 6
 
 # Types Reference
 
-All exported types from `@mnemos/sdk`.
+All exported types from `@mnemos-sdk/sdk`.
 
 ---
 
