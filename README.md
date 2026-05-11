@@ -6,10 +6,10 @@ Mnemos turns an AI agent's operational memory into an ownable, transferable, and
 
 | Repo | Purpose |
 |---|---|
-| [`contract/`](contract/) | Solidity contracts deployed on 0G Chain |
-| [`backend/`](backend/) | TypeScript SDK (`@mnemos-sdk/sdk`) + NestJS API + reference agent |
-| [`frontend/`](frontend/) | Next.js 14 marketplace UI |
-| [`arbitrage-agent/`](arbitrage-agent/) | Autonomous AI arbitrage agent with Mnemos integration |
+| [`menemos-ai/contract`](https://github.com/menemos-ai/contract) | Solidity contracts deployed on 0G Chain |
+| [`menemos-ai/backend`](https://github.com/menemos-ai/backend) | TypeScript SDK (`@mnemos-sdk/sdk`) + NestJS API + reference agent |
+| [`menemos-ai/frontend`](https://github.com/menemos-ai/frontend) | Next.js 14 marketplace UI |
+| [`menemos-ai/arbitrage-agent`](https://github.com/menemos-ai/arbitrage-agent) | Autonomous AI arbitrage agent with Mnemos integration |
 
 ---
 
@@ -67,8 +67,8 @@ The SDK (`@mnemos-sdk/sdk`) is the integration surface for agent developers. It 
 
 ## Demo
 
-> **Live Marketplace:** [https://mnemos.vercel.app](https://mnemos.vercel.app)
-> *(Replace this URL with your deployed Vercel/Netlify URL before submission)*
+> **Demo Video:** [https://youtu.be/m0DG4nA9Tvo](https://youtu.be/m0DG4nA9Tvo)
+> **Pitching Video:** [https://youtu.be/qbAJWKf3-oo](https://youtu.be/qbAJWKf3-oo)
 
 Judges can browse listed memory snapshots, inspect on-chain provenance (content hash, storage URI, lineage ancestors, creator, timestamp), and view the buy / rent / fork pricing — all without a wallet. The marketplace reads directly from 0G Chain.
 
@@ -92,8 +92,8 @@ To see live memory minting in action, search the MemoryMarketplace contract addr
 |---|---|
 | `MemoryRegistry.sol` — ERC-721 with lineage tracking | Deployed on 0G Mainnet |
 | `MemoryMarketplace.sol` — buy / rent / fork / royalty | Deployed on 0G Mainnet |
-| `@mnemos-sdk/sdk` — TypeScript SDK for agent developers | Published on npm |
-| NestJS REST API — server-side SDK wrapper | Running |
+| [`@mnemos-sdk/sdk`](https://www.npmjs.com/package/@mnemos-sdk/sdk) — TypeScript SDK for agent developers | Published on npm |
+| NestJS REST API — server-side SDK wrapper ([API docs](https://mnemos-api.up.railway.app/docs)) | Running |
 | Next.js 14 marketplace UI — wagmi + viem | Deployed |
 | Arbitrage agent demo — autonomous AI with Mnemos integration | Runnable |
 | Foundry test suite — buy / rent / fork / royalty coverage | Passing |
@@ -114,7 +114,7 @@ To see live memory minting in action, search the MemoryMarketplace contract addr
 
 ### Track 1 — No wallet needed
 
-1. Open the [live marketplace](https://mnemos.vercel.app) to browse active memory listings.
+1. Open the [live marketplace](https://github.com/menemos-ai/frontend) to browse active memory listings.
 2. Search either contract address on the [0G Chain explorer](https://chainscan.0g.ai) to see live minted tokens and transaction history.
 3. Open a listing to inspect on-chain provenance: content hash, storage URI, lineage, creator, timestamp.
 
@@ -123,8 +123,8 @@ To see live memory minting in action, search the MemoryMarketplace contract addr
 Requires a wallet funded with A0GI. Get testnet tokens from [faucet.0g.ai](https://faucet.0g.ai).
 
 ```bash
-git clone <backend-repo-url>
-cd mnemos-backend
+git clone https://github.com/menemos-ai/backend.git
+cd backend
 pnpm install
 ```
 
@@ -148,7 +148,7 @@ pnpm agent:run
 
 The reference agent generates a synthetic trade every 2 seconds and triggers an on-chain memory snapshot every 30 seconds. You will see token IDs logged to stdout as they mint. Search your wallet address on [chainscan.0g.ai](https://chainscan.0g.ai) to confirm transactions landing.
 
-For the full step-by-step integration guide, see [`backend/HOW_TO_RUN.md`](backend/HOW_TO_RUN.md).
+For the full step-by-step integration guide, see [`HOW_TO_RUN.md`](https://github.com/menemos-ai/backend/blob/main/HOW_TO_RUN.md).
 
 ---
 
@@ -186,7 +186,7 @@ mnemos.autoSnapshot({
 });
 ```
 
-That's it. The agent's memory is now an on-chain asset that can be listed, sold, rented, or forked. For marketplace operations (list, buy, rent, fork, royalty), see [`backend/HOW_TO_RUN.md`](backend/HOW_TO_RUN.md).
+That's it. The agent's memory is now an on-chain asset that can be listed, sold, rented, or forked. For marketplace operations (list, buy, rent, fork, royalty), see [`HOW_TO_RUN.md`](https://github.com/menemos-ai/backend/blob/main/HOW_TO_RUN.md).
 
 ---
 
@@ -194,6 +194,8 @@ That's it. The agent's memory is now an on-chain asset that can be listed, sold,
 
 - **0G Chain explorer:** [chainscan.0g.ai](https://chainscan.0g.ai) — search either contract address to see live activity
 - **Faucet:** [faucet.0g.ai](https://faucet.0g.ai) — fund a wallet with A0GI to run Track 2 or interact with the marketplace
+- **API docs:** [mnemos-api.up.railway.app/docs](https://mnemos-api.up.railway.app/docs) — Swagger UI for the NestJS REST API
+- **npm package:** [npmjs.com/package/@mnemos-sdk/sdk](https://www.npmjs.com/package/@mnemos-sdk/sdk)
 - **No backend database** — all persistent state lives on 0G Chain (NFTs, listings, rentals, royalties) or in 0G Storage (encrypted memory bundles). The NestJS API is a stateless wrapper around the SDK.
 - **Privacy posture:** the v2 key scheme makes memory bundles readable by anyone who holds the `contentHash` (which is public on-chain). This is intentional for the marketplace model — buyers can verify content before purchasing. TEE-based key release is the v2 roadmap item for confidential memory.
 - **Contracts are not production-audited** — use at your own risk.
