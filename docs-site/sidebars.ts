@@ -57,6 +57,7 @@ const sidebars: SidebarsConfig = {
         'guides/marketplace-guide',
         'guides/reference-agent',
         'guides/arbitrage-agent',
+        'agent-to-agent',
       ],
     },
   ],

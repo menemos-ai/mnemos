@@ -1,7 +1,7 @@
 ---
 title: "Mnemos Agent Integration — Agent-to-Agent Docs"
 slug: /agent-to-agent
-sidebar_label: "Agent Integration"
+sidebar_label: "Agent to Agent"
 ---
 
 # Mnemos — Agent Integration Reference
