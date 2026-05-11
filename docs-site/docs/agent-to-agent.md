@@ -721,3 +721,144 @@ try {
 ```
 
 ---
+
+## All Environment Variables
+
+All six variables are required. The five fixed values below apply to 0G Mainnet and do not need to be looked up elsewhere.
+
+| Variable | Value / Example | Required | Description |
+|---|---|---|---|
+| `AGENT_PRIVATE_KEY` | `0x<your-wallet-key>` | Yes | EVM wallet private key — signs all transactions and derives the storage encryption key |
+| `OG_CHAIN_ID` | `16661` | Yes | 0G Mainnet chain ID — pass as `Number(process.env.OG_CHAIN_ID)` because env vars are strings |
+| `OG_RPC_URL` | `https://evmrpc.0g.ai` | Yes | 0G EVM RPC endpoint |
+| `OG_STORAGE_NODE` | `https://indexer-storage-turbo.0g.ai` | Yes | 0G Storage indexer URL for uploading and retrieving memory bundles |
+| `REGISTRY_ADDRESS` | `0x848F7000223dd2eBa5ac30b37d52EdA8D058E72E` | Yes | MemoryRegistry contract address on 0G Mainnet |
+| `MARKETPLACE_ADDRESS` | `0xFeb5Ac77Cd7746e2b35825dA800458D660D10209` | Yes | MemoryMarketplace contract address on 0G Mainnet |
+
+---
+
+## Type Reference
+
+All public types exported from `@mnemos/sdk`.
+
+```ts
+interface MnemosClientConfig {
+  privateKey:         `0x${string}`;
+  chainId:            number;
+  rpcUrl:             string;
+  storageNodeUrl:     string;
+  registryAddress:    `0x${string}`;
+  marketplaceAddress: `0x${string}`;
+  storageMock?:       boolean;
+}
+
+interface MemoryBundle {
+  data:     unknown;       // any JSON-serializable agent state
+  metadata: MemoryMetadata;
+}
+
+interface MemoryMetadata {
+  category:   MemoryCategory;
+  title?:     string;
+  agentId?:   string;
+  version?:   string;
+  createdAt?: number;      // Unix timestamp in ms
+  tags?:      string[];
+}
+
+type MemoryCategory =
+  | 'trading' | 'research' | 'support' | 'gaming' | 'social'
+  | (string & {});          // allows custom category strings
+
+interface SnapshotResult {
+  tokenId:     bigint;
+  contentHash: `0x${string}`;
+  storageUri:  string;
+  txHash:      `0x${string}`;
+  timestamp:   number;     // Date.now() in ms
+}
+
+interface MemoryInfo {
+  tokenId:     bigint;
+  contentHash: `0x${string}`;
+  storageUri:  string;
+  creator:     `0x${string}`;
+  parent:      bigint;     // 0n = root; non-zero = forked token
+  timestamp:   bigint;     // block timestamp in seconds (not ms)
+}
+
+interface ListingTerms {
+  buyPrice:        bigint; // 0n = not for sale
+  rentPricePerDay: bigint; // 0n = not for rent
+  forkPrice:       bigint; // 0n = not forkable
+  royaltyBps:      number; // basis points; max 5000 (50%)
+}
+
+interface ListingEvent {
+  tokenId:         bigint;
+  seller:          `0x${string}`;
+  buyPrice:        bigint;
+  rentPricePerDay: bigint;
+  forkPrice:       bigint;
+  royaltyBps:      number;
+}
+
+interface AutoSnapshotOptions {
+  intervalMs:  number;
+  buildBundle: () => MemoryBundle | Promise<MemoryBundle>;
+  onSnapshot?: (result: SnapshotResult) => void;
+  onError?:    (error: Error) => void;
+}
+```
+
+---
+
+## Troubleshooting
+
+**1. `Error: invalid private key` on `MnemosClient` init**
+
+Cause: `AGENT_PRIVATE_KEY` is missing, empty, or not prefixed with `0x`.
+
+Fix: Ensure the variable is set and starts with `0x`. Confirm `.env` is loaded with `import 'dotenv/config'` at the top of your entry file.
+
+---
+
+**2. `Error: insufficient funds` on `snapshot()`**
+
+Cause: The wallet has no A0GI to pay gas for the on-chain mint transaction.
+
+Fix: Fund the wallet address derived from `AGENT_PRIVATE_KEY` with A0GI on 0G Mainnet.
+
+---
+
+**3. `Error: execution reverted` on `list()`**
+
+Cause: `setApprovalForAll` was not called before `list()`. The marketplace contract needs ERC-721 approval to transfer the token on behalf of the owner.
+
+Fix: Call `setApprovalForAll` once per wallet using the viem walletClient pattern shown in the [list()](#list) section. The approval persists on-chain — you only need to do this once.
+
+---
+
+**4. `Error: upload failed` or timeout on `snapshot()`**
+
+Cause: The 0G Storage node at `OG_STORAGE_NODE` is unreachable or returning errors.
+
+Fix: Verify `OG_STORAGE_NODE=https://indexer-storage-turbo.0g.ai` is set correctly. Check network connectivity. The error is transient — retry `snapshot()` after a delay.
+
+---
+
+**5. `Error: could not detect network` or transactions landing on the wrong chain**
+
+Cause: `OG_RPC_URL` is pointing to a different network, or `OG_CHAIN_ID` does not match the RPC endpoint.
+
+Fix: Use `OG_RPC_URL=https://evmrpc.0g.ai` and `OG_CHAIN_ID=16661`. Verify the chain ID matches by calling `eth_chainId` on the RPC endpoint.
+
+---
+
+**6. TypeScript error: `Argument of type 'string' is not assignable to parameter of type 'number'` on `chainId`**
+
+Cause: `process.env.OG_CHAIN_ID` is a `string`. Passing it directly to `chainId` (which expects `number`) fails at compile time.
+
+Fix: Wrap with `Number()` — use `chainId: Number(process.env.OG_CHAIN_ID)` in `MnemosClientConfig`.
+
+---
