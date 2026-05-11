@@ -70,6 +70,11 @@ const config: Config = {
           position: 'left',
         },
         {
+          to: '/agent-to-agent',
+          label: 'Agent to Agent',
+          position: 'left',
+        },
+        {
           href: 'https://github.com/menemos-ai',
           label: 'GitHub',
           position: 'right',
