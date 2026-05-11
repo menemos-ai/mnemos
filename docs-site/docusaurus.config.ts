@@ -6,7 +6,6 @@ const config: Config = {
   title: 'Mnemos',
   tagline: 'On-Chain AI Agent Memory Protocol',
 
-  // TODO: update after Vercel deploy confirms subdomain
   url: 'https://mnemos-docs.vercel.app',
   baseUrl: '/',
 
